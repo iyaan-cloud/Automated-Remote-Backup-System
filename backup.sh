@@ -14,9 +14,6 @@ mkdir -p /home/rian/backup
 #zip the file
 /bin/tar -czvf "$local_backup_dir" "$source_dir"
 
-
-/bin/echo "backup selesai: $date"
-
 #upload to remote dir
 /usr/bin/scp -P 2221 $local_backup_dir $remote_dir:$remote_backup_dir
 
@@ -24,11 +21,11 @@ mkdir -p /home/rian/backup
 #check status
 if [ $? -eq 0 ]; then
 
-  /bin/echo "[$(date)] backup berhasil di kirim ke server backup." >> /home/rian/backup/log-backup.txt
+  /bin/echo "[$(date)] Backup Completed successfully and copied." >> /home/rian/backup/log-backup.txt
 
 else
 
-  /bin/echo "[$(date)] GAGAL: Backup TIDAK terkirim ke server backup." >> /home/rian/backup/log-backup.txt
+  /bin/echo "[$(date)] FAILED to Backup: There is something worng with the Server." >> /home/rian/backup/log-backup.txt
 
 fi
 
