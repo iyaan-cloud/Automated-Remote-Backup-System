@@ -8,20 +8,20 @@ source_dir=/var/log
 remote_server=client@192.168.10.2
 remote_backup_dir=/home/client/backup
 
-#pembuatan folder
+#create directory
 mkdir -p /home/rian/backup
 
-#mengubah file jadi tar.gz
+#zip the file
 /bin/tar -czvf "$local_backup_dir" "$source_dir"
 
 
 /bin/echo "backup selesai: $date"
 
-#pengiriman ke server backup
+#upload to remote dir
 /usr/bin/scp -P 2221 $local_backup_dir $remote_dir:$remote_backup_dir
 
 
-#cek status SCP
+#check status
 if [ $? -eq 0 ]; then
 
   /bin/echo "[$(date)] backup berhasil di kirim ke server backup." >> /home/rian/backup/log-backup.txt
@@ -33,5 +33,5 @@ else
 fi
 
 
-#menghapus file backup yang lebih dari 7 hari
+#delete file expired more than 7 days
 find /home/rian/backup -type f -mtime +7 -exec rm -f {} \;
